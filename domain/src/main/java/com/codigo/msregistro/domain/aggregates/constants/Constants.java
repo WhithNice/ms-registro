@@ -6,4 +6,6 @@ public class Constants {
     public static final Integer STATUS_ACTIVE=1;
     //AUDIT
     public static final String AUDIT_ADMIN="PRODRIGUEZ";
+    // CLAVES
+    public static final String REDIS_KEY_PERSONA="MS:REGISTRO:PERSONA:";
 }
