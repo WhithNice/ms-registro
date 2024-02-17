@@ -3,6 +3,9 @@ package com.codigo.msregistro.application.controller;
 import com.codigo.msregistro.domain.aggregates.dto.PersonaDTO;
 import com.codigo.msregistro.domain.aggregates.request.RequestPersona;
 import com.codigo.msregistro.domain.ports.in.PersonaServiceIn;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.info.Info;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,11 +13,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@OpenAPIDefinition(
+        info = @Info(
+                title = "API-PERSONA",
+                version = "1.0",
+                description = "Mantenimiento de Persona"
+        )
+)
 @RestController
 @RequestMapping("/v1/persona")
 @RequiredArgsConstructor
 public class PersonaController {
     private final PersonaServiceIn personaServiceIn;
+    @Operation(summary = "Crea una Persona")
     @PostMapping
     public ResponseEntity<PersonaDTO> registrar(@RequestBody RequestPersona requestPersona){
         return ResponseEntity
@@ -22,6 +33,7 @@ public class PersonaController {
                 .body(personaServiceIn.crearPersonaIn(requestPersona));
     }
 
+    @Operation(summary = "Detalle de una Persona")
     @GetMapping("/{id}")
     public ResponseEntity<PersonaDTO>obtenerPersona(@PathVariable Long id){
 
@@ -30,6 +42,7 @@ public class PersonaController {
                 .body(personaServiceIn.obtenerPersonaIn(id).get());
 
     }
+    @Operation(summary = "Lista de Personas activas")
     @GetMapping()
     public ResponseEntity<List<PersonaDTO>>obtenerTodos(){
 
@@ -38,6 +51,7 @@ public class PersonaController {
                 .body(personaServiceIn.obtenerTodosIn());
 
     }
+    @Operation(summary = "Actualiza una Persona")
     @PutMapping("/{id}")
     public ResponseEntity<PersonaDTO>actualizar(@PathVariable Long id,@RequestBody RequestPersona requestPersona){
         return ResponseEntity
